@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Nova+Square&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+        <!--<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">-->
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css" />
+        <title>Category Viewer</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .dropdown {
+                margin: 20px;
+            }
+
+            .figurines {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .figurine-card {
+                position: relative;
+                width: 200px;
+                height: 350px;
+                border: 1px solid #ccc;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0,0.15);
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            .figurine-card img {
+                width: 100%;       
+                height: 80%;      
+                object-fit: cover;
+            }
+
+            .figurine-card .description {
+                height: 20%; 
+                font-size: 12px; 
+                text-align: center;
+                padding: 5px;
+                font-weight: 500;
+            }
+
+            .add-button {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background-color: #55c6ef;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .add-button:hover {
+                background-color: #45a049;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <nav class="addPop__navbar">
+            <div class="navbar__container">
+                <!-- Creating menu bar-->
+                 <ul class="navbar__menu">
+                    <!-- Create dropdown menu-->
+                    <div class="dropdown">
+                        <label for="categories" class="font__format__one">Choose a Category:</label>
+                        <select id="categories" class="font__format__two">
+                            <option value="">--Select a Category--</option>
+                        </select>
+                    </div>
+                 </ul>
+
+                 <!-- mini logo -->
+                 <div class="logo__mini">
+                    <a href="index.html" class="logo__mini__link"> PMR</a>
+                 </div>
+
+                 <!-- Login -->
+                 <div class="navbar__btn">
+                    <a href="/login.html" class="button">
+                        Account
+                    </a>
+                </div>
+            </div>
+         </nav>
+        <script src="script.js" defer></script>
+        <div class="figurines" id="figurines"></div>
+        <button onclick="localStorage.clear(); location.reload();">Reset Saved Figurines</button> 
+        <div id="display-area"></div>
+        <div id="popup" style="display:none; position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.25); z-index: 1000;">
+            <p>Choose an option:</p>
+            <button id="nonSecret">Regular</button>
+            <button id="secret">Secret</button>
+        </div>   
+
+        <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index: 999;"></div>
+    </body>
+</html>

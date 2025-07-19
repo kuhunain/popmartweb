@@ -1,0 +1,37 @@
+<nav class="addPop__navbar">
+        <!-- Create dropdown menu-->
+        <div class="dropdown">
+            <label for="categories" class="font__format__one">Choose a Category:</label>
+            <select id="categories" class="font__format__two">
+                <option value="">--Select a Category--</option>
+            </select>
+        </div>
+        <div class="figurines" id="figurines"></div> 
+    <div class="navbar__btn">
+        <a href="/login.html" class="button">
+            Account
+        </a>
+    </div>
+</nav>
+
+
+.figurines {
+                border: 1px solid rgb(248, 65, 4);
+                margin: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+             .figurine-card {
+                border: 1px solid #ccc;
+                padding: 10px;
+                text-align: center;
+                width: calc(25% - 20px);
+            }\
+
+            .figurine-card img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+            }
