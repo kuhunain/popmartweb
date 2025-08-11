@@ -1,13 +1,84 @@
+// supabase initialization
+const SUPABASE_URL = 'https://ugjfitiztijiyxpzzhxi.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnamZpdGl6dGlqaXl4cHp6aHhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5NTc2NzAsImV4cCI6MjA2ODUzMzY3MH0.UBgoJhBcJIedNEcFsn3LV0Q3jpyHTKBwsg5UOnGVzsw';
+//const { createClient } = supabase;
+//const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let supabaseClient;
+
 window.addEventListener('DOMContentLoaded', () => {
-    loadCategories();
-    categoryFilter();
-    logSavedFigurines();
+    initializeSupabase();
+
+    // call only if categories exists - meaning on add page
+    if (document.getElementById('categories')) {
+        loadCategories();
+        categoryFilter();
+    }
+    
+    // save figurines to local storage -- subject to change
+    //logSavedFigurines();
+
+    //login handling
+    loginHandling();
 });
 
-async function logSavedFigurines() {
+async function initializeSupabase() {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // enable session persistence for user login
+    const { data: { session } } = await supabaseClient.auth.getSession();
+
+    if (session) {
+        // user is logged in
+        console.log('User is still logged in:', session.user);
+    } else {
+        // not logged in
+        console.log('No user session found.');
+    }
+
+    const accountButton = document.getElementById('account-button');
+    if (accountButton) {
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            if (session) {
+                accountButton.href = 'account.html';
+            } else {
+                accountButton.href = 'login.html';
+            }
+        });
+    }
+}
+
+async function loginHandling() {
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // authenticate user
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                console.log('login failed');
+                alert('Login failed: ' + error.message);
+            } else {
+                console.log('login successful');
+                alert('Welcome back, ' + data.user.email + '!');
+                // redirect to index (home) page
+                window.location.href = 'index.html'; 
+            }
+        });
+    }
+}
+
+/*async function logSavedFigurines() {
     const saved = JSON.parse(localStorage.getItem('myFigurineList')) || [];
     console.log('saved figurines: ', saved);
-}
+}*/
 
 //*** gets and loads all categories into html dropdown menu
 async function loadCategories() {
@@ -77,6 +148,7 @@ function parseCSV(csv) {
     });
 }
 
+/*
 //*** saves each added item to a list
 async function saveToLocalStorage(currFigurine) {
 
@@ -88,7 +160,42 @@ async function saveToLocalStorage(currFigurine) {
 
     // save back to local storage
     localStorage.setItem('myFigurineList', JSON.stringify(saved));
+}*/
+
+async function saveToUserStorage(figToSave) {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+        alert("You must be logged in to save figurines.");
+        return;
+    }
+
+    // Add user_id to the figurine object
+    const figurineData = {
+        id: crypto.randomUUID(), // Generate a unique ID for the figurine saved
+        user_id: user.id,  // users unique ID
+        name: figToSave.name,
+        image_url: figToSave.image,
+        category: figToSave.category,
+        secret: figToSave.secret === 'yes' ? true : false, // convert to boolean
+        date_acquired: figToSave.date_acquired || null, // use date acquired if provided
+        created_at: new Date().toISOString() // add timestamp
+    };
+
+    // Insert into 'figurines' table
+    const { error } = await supabaseClient
+        .from('figurines')
+        .insert([figurineData]);
+
+    if (error) {
+        console.error('Error saving figurine:', error.message);
+        alert("Failed to save figurine.");
+    } else {
+        console.log("Figurine saved successfully!");
+        alert("Figurine saved!");
+    }
 }
+
 
 //*** load the figurines in, and has 'add' functionality
 // called onSecretClick(), onNotSecretClick(), and saveToLocalStorage()
@@ -155,6 +262,11 @@ async function categoryFilter() {
                     overlay.style.display = 'block';
 
                     function onNonSecretClick() {
+                        const dateValue = document.getElementById('figurine-date').value; //Example output: '2025-07-19'
+                        if (!dateValue) {
+                            alert("Please select a date!");
+                            return;
+                        }
                         // alert user
                         alert('Non-Secret option clicked for ' + fig.Name);
                         
@@ -163,10 +275,11 @@ async function categoryFilter() {
                             name: fig.Name,
                             image: fig['Image URL'],
                             category: fig.category,
-                            secret: 'no'
+                            secret: 'no',
+                            date_acquired: dateValue // add date acquired
                         };
                         // call method to save to local storage
-                        saveToLocalStorage(figToSave);
+                        saveToUserStorage(figToSave);
                         popup.style.display = 'none';
                         overlay.style.display = 'none';
                         
@@ -174,6 +287,13 @@ async function categoryFilter() {
                     }
 
                     function onSecretClick() {
+                        const dateValue = document.getElementById('figurine-date').value; //Example output: '2025-07-19'
+
+                        if (!dateValue) {
+                            alert("Please select a date!");
+                            return;
+                        }
+
                         // alert user
                         alert('Secret option clicked for ' + fig.Name);
                         
@@ -185,7 +305,7 @@ async function categoryFilter() {
                             secret: 'yes'
                         };
                         // call method to save to local storage
-                        saveToLocalStorage(figToSave);
+                        saveToUserStorage(figToSave);
                         popup.style.display = 'none';
                         overlay.style.display = 'none';
                         
