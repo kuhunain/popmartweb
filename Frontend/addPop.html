@@ -1,3 +1,4 @@
+<!-- clean -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,12 +16,21 @@
         <style>
             body {
                 font-family: Arial, sans-serif;
+                background-color: white;
+            }
+            
+            /* select a category dropdown styling */
+            .addPop_account__navbar select {
+                font-size: 1rem;
+                background-color: white;
             }
 
+            /* dropdown styling */
             .dropdown {
                 margin: 20px;
             }
 
+            /* all figurines page layout */
             .figurines {
                 display: flex;
                 flex-wrap: wrap;
@@ -29,6 +39,7 @@
                 padding: 20px;
             }
 
+            /* figurine card styling (individual) */
             .figurine-card {
                 position: relative;
                 width: 200px;
@@ -43,12 +54,14 @@
                 overflow: hidden;
             }
 
+            /* image card */
             .figurine-card img {
                 width: 100%;       
                 height: 80%;      
                 object-fit: cover;
             }
 
+            /* figurine name */
             .figurine-card .description {
                 height: 20%; 
                 font-size: 12px; 
@@ -57,11 +70,12 @@
                 font-weight: 500;
             }
 
+            /* add button inside each figurine card */
             .add-button {
                 position: absolute;
                 bottom: 10px;
                 right: 10px;
-                background-color: #55c6ef;
+                background-color: #fad7ee;
                 color: white;
                 border: none;
                 padding: 5px 10px;
@@ -69,42 +83,39 @@
                 cursor: pointer;
             }
 
+            /* hover effect for add button */
             .add-button:hover {
                 background-color: #45a049;
             }
 
-
         </style>
     </head>
     <body>
+        <!-- NavBar -->
         <nav class="addPop_account__navbar">
-            <div class="navbar__container">
-                <!-- Creating menu bar-->
-                 <ul class="navbar__menu">
-                    <!-- Create dropdown menu-->
-                    <div class="dropdown">
-                        <label for="categories" class="font__format__one">Choose a Category:</label>
-                        <select id="categories" class="font__format__two">
-                            <option value="">--Select a Category--</option>
-                        </select>
-                    </div>
-                 </ul>
-
-                 <!-- mini logo -->
-                 <div class="logo__mini">
-                    <a href="index.html" class="logo__mini__link__one"> PMR</a>
-                 </div>
-
-                 <!-- Login -->
-                 <div class="navbar__btn">
-                    <a href="#" id="account-button" class="button">
-                        Account
-                    </a>
+            <div class="navbar__container" style="width:100%; display:flex; align-items:center; justify-content:space-between; padding: 0 30px; height:100%;">
+                
+                <!-- Left: Dropdown -->
+                <div class="dropdown" style="flex:1;">
+                    <label for="categories" class="font__format__red" style="font-size:1.2rem; margin-right:10px;">Choose a Category:</label>
+                    <select id="categories" class="font__format__red" style="padding:6px 10px; border-radius:5px; border:none;">
+                        <option value="">--Select a Category--</option>
+                    </select>
                 </div>
+
+                <!-- Right: PMR Logo -->
+                <div class="logo__mini" style="flex-shrink:0;">
+                    <a href="index.html" class="logo__mini__link__two">PMR</a>
+                </div>
+
             </div>
-         </nav>
+        </nav>
+        
+        <!-- individual figurine card styling and layout done in script.js-->
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
         <script src="script.js" defer></script>
+
+        <!-- popup add figurine box -->
         <div class="figurines" id="figurines"></div>
         <div id="display-area"></div>
         <div id="popup" style="display:none; position:fixed; top:50%; left:50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.25); z-index: 1000;">

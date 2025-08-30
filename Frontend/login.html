@@ -1,3 +1,4 @@
+<!-- clean -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,15 +18,24 @@
     <script src="script.js" defer></script>
 
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #55c6ef; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
+        /* navbar using body */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
             margin: 0;
+            background: #f7eaed;
         }
+
+        /* main login seciton */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* box for login credentials */
         .login-container {
             background: #fff;
             padding: 2rem 2.5rem;
@@ -33,23 +43,31 @@
             box-shadow: 0 2px 8px #ff0844;
             width: 320px;
         }
+
+        /* aligns heading in login box */
         .login-container h2 {
             margin-bottom: 1.5rem;
             text-align: center;
         }
+
+        /* creates rectangle for login box */
         .login-container label {
             display: block;
             margin-bottom: 0.5rem;
             margin-top: 1rem;
         }
+
+        /* for email and password input */
         .login-container input[type="text"],
         .login-container input[type="password"] {
             width: 100%;
             padding: 0.5rem;
             margin-bottom: 1rem;
-            border: 1px solid #55c6ef;
+            border: 1px solid black;
             border-radius: 4px;
         }
+
+        /* submit button */
         .login-container button {
             width: 100%;
             padding: 0.7rem;
@@ -60,9 +78,13 @@
             font-size: 1rem;
             cursor: pointer;
         }
+
+        /* submit button hover color change */
         .login-container button:hover {
-            background: #bb0432;
+            background: #fad7ee;
         }
+
+        /* new account signup link */
         .signup-container button {
             width: 50%;
             padding: 0.5rem;;
@@ -74,27 +96,36 @@
     </style>
 </head>
 <body>
-    <!-- login box -->
-    <div class="login-container">
-        <h2 class="font__format__two">Login</h2>
-        <form id="login-form">
-            <label for="username" class="font__format__two">Email</label>
-            <input type="text" id="username" name="username" required>
+    <!-- navbar -->
+    <nav class="addPop_account__navbar">
+        <div class="navbar__container" style="width:100%; display:flex; align-items:center; justify-content:space-between; padding: 0 30px; height:100%;">
+            <div></div>
 
-            <label for="password" class="font__format__two">Password</label>
-            <input type="password" id="password" name="password" required>
-
-            <button type="submit" class="font__format__one">Submit</button>
-
-            <div class="signup-container">
-                <a href="signup.html" class="font__format__two"> No Account? Sign up now!</a>
+            <!-- Right: PMR Logo -->
+            <div class="logo__mini" style="flex-shrink:0;">
+                <a href="index.html" class="logo__mini__link__two">PMR</a>
             </div>
-        </form>
-    </div>
+        </div>
+    </nav>
 
-    <!-- mini logo -->
-    <div class="logo__mini">
-        <a href="index.html" class="logo__mini__link__two"> PMR</a>
-    </div>
+    <!-- login box -->
+    <main>
+        <div class="login-container">
+            <h2 class="font__format__black">Login</h2>
+            <form id="login-form">
+                <label for="username" class="font__format__black">Email</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password" class="font__format__black">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit" class="font__format__white">Submit</button>
+
+                <div class="signup-container">
+                    <a href="signup.html" class="font__format__black"> No Account? Sign up now!</a>
+                </div>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

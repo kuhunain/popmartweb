@@ -6,10 +6,45 @@
     font-family: 'Kumbh Sans', sans-serif;
 }
 
+/* font colors */
+.font__format__red {
+    color:#ff0844;
+    font-family: 'Nova Square', sans-serif;
+}
+
+.font__format__black {
+    color:black;
+    font-family: 'Nova Square', sans-serif;
+}
+
+.font__format__white {
+    color:black;
+    font-family: 'Nova Square', sans-serif;
+}
+
+/* logo top right */
+.header-navbar {
+  width: 100%;
+  padding: 10px 50px;
+  box-sizing: border-box;
+  background-color: transparent; /* Or your preferred bg color */
+  position: sticky; /* optional if you want it to stay on top when scrolling */
+  top: 0;
+  z-index: 999;
+}
+
+.navbar__container__logo {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;  /* Align items to right */
+  align-items: center;
+}
+
 /* index.html */
 .navbar {
-    background: #f1f2f2;
-    height: 80px;
+    background: #f8f1f6;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,6 +52,7 @@
     position: sticky;
     top: 0;
     z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .navbar__container {
@@ -38,7 +74,7 @@
 
 #navbar__logo {
     background-color: #ff8177;
-    background-image: linear-gradient(to top, #ff0844 0%, #55c6ef 100%);
+    background-image: linear-gradient(to top, #fad7ee 0%, #ff0844 100%);
     background-size: 100%;
     -webkit-background-clip: text;
     -moz-background-clip: text;
@@ -66,7 +102,7 @@
     margin-right: 40px;
 }
 
-.navbar__links {
+.navbar__links__red {
     color: #ff0844;
     font-family: 'Nova Square', sans-serif;
     font-weight: 400;
@@ -79,7 +115,7 @@
     height: 100%;
 }
 
-.navbar__links_other {
+.navbar__links__white {
     color: white;
     font-family: 'Nova Square', sans-serif;
     font-weight: 400;
@@ -117,58 +153,44 @@
 }
 
 .button:hover {
-    background: #55c6ef;
+    background: #fad7ee;
     transition: all 0.3s ease;
 }
 
 /* addPop.html */
-.font__format__one {
-    color:#f1f2f2;
-    font-family: 'Nova Square', sans-serif;
-}
-
-.font__format__two {
-    color:black;
-    font-family: 'Nova Square', sans-serif;
-}
-
+/* Navbar */
 .addPop_account__navbar {
-    background: #ff0844;
-    height: 80px;
+    background: #f7eaed;
+    height: 100px; /* thicker */
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
     font-size: 1.2rem;
     position: sticky;
     top: 0;
     z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* mini logo */
+.navbar__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1300px;
+    padding: 0 50px;
+}
+
+/* PMR container */
 .logo__mini {
-    position: absolute;
-    right: 30px;
-    top: 20px;
-}
-
-.logo__mini__link__one {
-    background-image: linear-gradient(to top, white 0%, #55c6ef 100%);
-    background-size: 100%;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
-    font-family: 'Press Start 2P', system-ui;
-    font-weight: 700;
-    font-style: normal;
-    font-size: 1.2rem; /* Smaller for mini logo */
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
+    position: static;
+    display: flex;
+    align-items: center;
+    margin-left: 60px; /* push further right */
 }
 
 .logo__mini__link__two {
-    background-image: linear-gradient(to top, white 0%, #ff0844 100%);
+    background-image: linear-gradient(to top, #fad7ee 0%, #ff0844 100%);
     background-size: 100%;
     -webkit-background-clip: text;
     -moz-background-clip: text;
@@ -177,14 +199,14 @@
     font-family: 'Press Start 2P', system-ui;
     font-weight: 700;
     font-style: normal;
-    font-size: 1.2rem; /* Smaller for mini logo */
+    font-size: 2rem; /* Smaller for mini logo */
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
 }
 
 .logo__mini__link:hover {
-    color: #55c6ef;
+    color: #f7eaed;
 }
 
 /* figurine card */

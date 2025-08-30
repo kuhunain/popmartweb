@@ -1,8 +1,6 @@
 // supabase initialization
 const SUPABASE_URL = 'https://ugjfitiztijiyxpzzhxi.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnamZpdGl6dGlqaXl4cHp6aHhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5NTc2NzAsImV4cCI6MjA2ODUzMzY3MH0.UBgoJhBcJIedNEcFsn3LV0Q3jpyHTKBwsg5UOnGVzsw';
-//const { createClient } = supabase;
-//const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let supabaseClient;
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -330,6 +328,7 @@ async function categoryFilter() {
                     };
                 });
 
+                updateUserScore(supabaseClient.auth.getUser().then(({ data }) => data.user.id));
                 card.appendChild(addButton);
                 displayArea.appendChild(card);
             }
@@ -341,4 +340,71 @@ async function categoryFilter() {
 
         });
     });
+}
+
+/* updates user score whenever there is a change (add, remove) 
+Non-Secret figurine: 10 points
+Secret figurine: 50 points
+For every 10 figurines in the same category: 5-point bonus
+Collect 15 of the exact same Pop Mart figurine collection: special 20-point bonus */
+async function updateUserScore(userId) {
+  // get all figurines linked to user
+  const { data: figurines, error } = await supabase
+    .from('figurines')
+    .select('name, category, secret')
+    .eq('user_id', userId);
+
+  // error handling
+    if (error) {
+        console.error('Error fetching figurines:', error);
+        return;
+    }
+
+  // start at 0 score
+  let score = 0;
+
+  // create dictionaries to track categories and names count
+  const categoryCounts = {};
+  const nameCounts = {};
+
+  figurines.forEach(fig => {
+    // secret or nonsecret logic
+    if (fig.secret === 'yes') {
+      score += 50;
+    } else {
+      score += 10;
+    }
+
+    // track category number count
+    categoryCounts[fig.category] = (categoryCounts[fig.category] || 0) + 1;
+
+    // track name number count
+    nameCounts[fig.name] = (nameCounts[fig.name] || 0) + 1;
+  });
+
+  // add bonus points for categories (5 points per 10 figurines)
+  for (const cat in categoryCounts) {
+    // divide by 10 to get number of 10s, then multiply by 5 for bonus
+    // 25 figurines in category / 10 = 2 * 5 = 10 bonus points
+    const bonus = Math.floor(categoryCounts[cat] / 10) * 5;
+    score += bonus;
+  }
+
+  // add bonus points for names (20 points per 15 same-named figurines)
+  for (const name in nameCounts) {
+    // divide by 15 to get number of 15s, then multiply by 20 for bonus
+    // 30 figurines with same name / 15 = 2 * 20 = 40 bonus points
+    const bonus = Math.floor(nameCounts[name] / 15) * 20;
+    score += bonus;
+  }
+
+  // update user score in database
+  const { error: updateError } = await supabase
+    .from('users')
+    .update({ score })
+    .eq('user_id', userId);
+
+  if (updateError) {
+    console.error('Failed to update user score:', updateError);
+  }
 }

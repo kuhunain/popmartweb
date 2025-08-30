@@ -1,3 +1,4 @@
+<!-- clean -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,11 +18,12 @@
                 font-family: Arial, sans-serif;
             }
 
+            /* remove button inside each figurine card */
             .remove-button {
                 position: absolute;
                 bottom: 10px;
                 right: 10px;
-                background-color: #55c6ef;
+                background-color: #fad7ee;
                 color: white;
                 border: none;
                 padding: 5px 10px;
@@ -29,16 +31,18 @@
                 cursor: pointer;
             }
 
+            /* hover effect for remove button */
             .remove-button:hover {
                 background-color: #45a049;
             }
 
+            /* logout button */
             #logout-button {
                 position: absolute;
                 bottom: 20px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: linear-gradient(to right, #ff0844, #55c6ef); /* pink-orange gradient */
+                background: linear-gradient(to right, #ff0844, #fad7ee); /* pink-orange gradient */
                 color: white;
                 padding: 12px 24px;
                 font-size: 1.1em;
@@ -50,6 +54,7 @@
                 z-index: 10;
             }
 
+            /* hovering effect creates a slight scale and shadow effect */
             #logout-button:hover {
                 opacity: 0.9;
                 transform: translateX(-50%) scale(1.05);
@@ -58,39 +63,34 @@
         </style>
     </head>
     <body>
-        <!-- header section -->
+        <!-- NavBar -->
         <nav class="addPop_account__navbar">
-            <div class="navbar__container">
-                <!-- Creating menu bar-->
-                 <ul class="navbar__menu">
-                    <!-- add button-->
-                    <li class="navbar__item">
-                        <a href="addPop.html" class="navbar__links_other">
-                            Add
-                        </a>
-                    </li>
-                 </ul>
-                 
-                 <!-- heading -->
-                 <label for="categories" class="font__format__one">Your Figurines</label>
+            <div class="navbar__container" style="width:100%; display:flex; align-items:center; justify-content:space-between; padding: 0 30px; height:100%;">
+                
+                <!-- Left: Add Button -->
+                <div class="navbar__item">
+                    <a href="addPop.html" class="navbar__links__red" style="">Add</a>
+                </div>
 
-                 <!-- mini logo -->
-                 <div class="logo__mini">
-                    <a href="index.html" class="logo__mini__link__one"> PMR</a>
-                 </div>
+                <!-- Middle: Heading -->
+                <label for="name" class="font__format__red" style="font-weight: bold">Your Figurines</label>
+
+                <!-- Right: PMR Logo -->
+                <div class="logo__mini" style="flex-shrink:0;">
+                    <a href="index.html" class="logo__mini__link__two">PMR</a>
+                </div>
+
             </div>
-         </nav>
+        </nav>
+
+        <!-- Body -->
+         <div id="user-score" style="font-weight: bold; font-size: 1.5rem; color: #ff0844; margin: 20px 30px;">Score: 0</div>
 
         <div class="figurines" id="figurine-list"></div>
-        <div id="display-name-prompt" style="display: none;">
-            <label for="display-name">Choose a public display name:</label>
-            <input type="text" id="display-name" />
-            <button onclick="submitDisplayName()">Submit</button>
-        </div>
 
         <button class="font__format__one" id="logout-button">Logout</button>
-        <!-- <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index: 999;"></div> -->
 
+        <!-- figurine card layout, and remove button all laid out in account.js -->
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
         <script type="module" src="account.js"></script>
 

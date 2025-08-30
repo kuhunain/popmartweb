@@ -1,0 +1,69 @@
+<!-- clean -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rules</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- font family -->
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Square&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- css stylesheet -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- supbase and js script -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js" defer></script>
+
+    <style>
+        /* navbar using body */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            background: white;
+        }
+
+        /* main login section */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="addPop_account__navbar">
+        <div class="navbar__container" style="width:100%; display:flex; align-items:center; justify-content:space-between; padding: 0 30px; height:100%;">
+            
+            <div></div>
+            <!-- Middle: Heading -->
+            <label class="font__format__red" style="font-weight: bold">Welcome to PopMart Ranking! Score BIG with your Figurines!</label>
+
+            <!-- Right: PMR Logo -->
+            <div class="logo__mini" style="flex-shrink:0;">
+                <a href="index.html" class="logo__mini__link__two">PMR</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- rule box -->
+    <main>
+        <div>
+            <ul class="font__format__black" style="list-style-type: disc; padding-left: 20px; font-size: 1.2rem;">
+                <li class="font__format__black"><strong>Non-Secret figurine: </strong> 10 points</li>
+                <li class="font__format__black"><strong>Secret figurine: </strong> 50 points</li>
+                <li class="font__format__black"><strong>For every 10 figurines in the same category: </strong>5-point bonus</li>
+                <li class="font__format__black"><strong>Collect 15 of the exact same Pop Mart figurine collection: </strong> special 20-point bonus</li>
+            </ul>
+            <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+            <p class="font__format__black">Keep building your collection and climb that leaderboard!</p>
+        </div>
+    </main>
+</body>
+</html>
