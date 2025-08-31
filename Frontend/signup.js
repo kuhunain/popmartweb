@@ -68,9 +68,10 @@ form.addEventListener('submit', async (e) => {
     form.reset();
 
     // redirect to login after, delay to allow user to read message
+    /*
     setTimeout(() => {
       window.location.href = 'login.html';
-    }, 3000);
+    }, 3000);*/
 
   } catch (error) {
     console.error('Unexpected error during signup:', error);
