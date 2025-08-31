@@ -9,10 +9,10 @@ const message = document.getElementById('message');
 
 // display name generation logic
 const adjectives = [
-  'Swift', 'Lucky', 'Golden', 'Clever', 'Mighty', 'Silent', 'Bright', 'Brave', 'Happy', 'Cool'
+  'Molly', 'Dimoo', 'Skullpanda', 'Hirono', 'Pucky', 'Labubu', 'Bunny', 'Crybaby', 'Kubo', 'Nyota'
 ];
 const nouns = [
-  'Falcon', 'Tiger', 'Eagle', 'Panther', 'Wolf', 'Hawk', 'Shark', 'Bear', 'Lion', 'Fox'
+  'Collector', 'Hunter', 'Fanatic', 'Enthusiast', 'Seeker', 'Master', 'Curator', 'Trader', 'Explorer', 'Connoisseur'
 ];
 
 

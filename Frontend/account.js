@@ -13,25 +13,32 @@ window.location.href = 'login.html'; // force login if not logged in
 }
 user = session.user;
 
-// if user is logged in, fetch their display name
+// if user is logged in, fetch their display name and score
 if (user) {
     const { data, error } = await supabase
         .from('users')
-        .select('display_name')
+        .select('display_name, score')
         .eq('user_id', user.id) // match Supabase Auth user ID
         .single();
 
     if (error) {
         console.error('Error fetching display name:', error);
     } else {
-        // get score for html 
+        /*
+      // get score for html 
         const scoreElement = document.getElementById('user-score');
         console.log('score', data.score);
-        scoreElement.textContent = `Score: ${data.score || 0}`;
+        scoreElement.textContent = `Score: ${data.score || 0}`;*/
 
         // update name for html
         const figurinesLabel = document.querySelector('label[for="name"]');
         figurinesLabel.textContent = `${data.display_name}'s Figurines`;
+
+        //update score display at first
+        updateScoreDisplay(data.score || 0);
+
+        // calculate and update score on page load
+        await updateUserScore(user.id);
     }
 }
 
@@ -48,12 +55,27 @@ if (error) { //error handling
 } else {
     const container = document.getElementById('figurine-list');
     
+    // sort figurines by date acquired, newest first
+    const sortedData = data.sort((a, b) => {
+        const dateA = new Date(a.date_acquired || 0); // fallback to epoch if missing
+        const dateB = new Date(b.date_acquired || 0);
+        return dateB - dateA; // descending order
+    });
+    
     // display each figurine logic
     // includes name, image url, and date acquired
-    data.forEach(fig => {
+    sortedData.forEach(fig => {
 
         const card = document.createElement('div');
         card.className = 'figurine-card';
+
+        // if secret figurine, add badge
+        if (fig.secret === true) {
+            const secretBadge = document.createElement('div');
+            secretBadge.className = 'secret-badge';
+            secretBadge.textContent = 'SECRET';
+            card.appendChild(secretBadge);
+        }
 
         const img = new Image();
         img.src = fig.image_url;
@@ -120,11 +142,21 @@ async function removeButton(fig, card) {
       } else {
         console.log('Figurine removed successfully');
         card.remove(); // remove from DOM
+
+        //update score after successful removal
+        await updateUserScore(user.id);
       }
     });
 
-    updateUserScore(user.id); // update user score after removal
     card.appendChild(removeButton);
+}
+
+// helper to update the score display in html
+function updateScoreDisplay(score) {
+  const scoreElement = document.getElementById('user-score');
+  if (scoreElement) {
+    scoreElement.textContent = `Score: ${score}`;
+  } 
 }
 
 /* updates user score whenever there is a change (add, remove) 
@@ -154,7 +186,7 @@ async function updateUserScore(userId) {
 
   figurines.forEach(fig => {
     // secret or nonsecret logic
-    if (fig.secret === 'yes') {
+    if (fig.secret === true) {
       score += 50;
     } else {
       score += 10;
@@ -183,6 +215,8 @@ async function updateUserScore(userId) {
     score += bonus;
   }
 
+  console.log('Calculated score:', score); //debug 
+
   // update user score in database
   const { error: updateError } = await supabase
     .from('users')
@@ -191,6 +225,10 @@ async function updateUserScore(userId) {
 
   if (updateError) {
     console.error('Failed to update user score:', updateError);
+  } else {
+    console.log('User score updated successfully');
+    // update score display on page
+    updateScoreDisplay(score);
   }
 }
 

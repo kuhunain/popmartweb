@@ -300,7 +300,8 @@ async function categoryFilter() {
                             name: fig.Name,
                             image: fig['Image URL'],
                             category: fig.category,
-                            secret: 'yes'
+                            secret: 'yes',
+                            date_acquired: dateValue
                         };
                         // call method to save to local storage
                         saveToUserStorage(figToSave);

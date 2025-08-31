@@ -3,55 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
+    <title>Leaderboard - PMR</title>
 
     <!-- font family -->
     <link href="https://fonts.googleapis.com/css2?family=Nova+Square&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- css stylesheet -->
-    <link rel="stylesheet" href="styles.css" /> 
+    <link rel="stylesheet" href="styles.css" />
 
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
-        h1 { text-align: center; margin-bottom: 24px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; text-align: left; }
-        th { background: #007bff; color: #fff; }
-        tr:nth-child(even) { background: #f9f9f9; }
+        body {
+            background: white;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+        }
+
+        .leaderboard-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #leaderboard {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .leaderboard-item {
+            position: relative;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+
+        .leaderboard-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .current-user {
+            border: 3px solid #fff !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .current-user:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .rank-number {
+            position: absolute;
+            left: 20px;
+            font-family: 'Nova Square', sans-serif;
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: white;
+            /*text-shadow: 1px 1px 2px black;*/
+        }
+
+        .player-name {
+            flex-grow: 1;
+            text-align: center;
+            font-family: 'Nova Square', sans-serif;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 1px 1px 2px #ff0844;
+        }
+
+        .player-score {
+            position: absolute;
+            right: 20px;
+            font-family: 'Nova Square', sans-serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: white;
+            text-shadow: 1px 1px 2px #ff0844;
+        }
+
+       
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .leaderboard-item {
+                height: 50px;
+                padding: 0 20px;
+            }
+            
+            .rank-number, .player-name, .player-score {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- NavBar -->
+    <nav class="addPop_account__navbar">
+        <div class="navbar__container" style="width:100%; display:flex; align-items:center; justify-content:space-between; padding: 0 30px; height:100%;">
+
+            <!-- Left: user count -->
+            <div class="font__format__red" id="user-count" >Loading...</div>
+            
+            <!-- Middle: Heading -->
+            <label class="font__format__red" style="font-weight: bold">Leaderboard</label>
+            
+            <!-- Right: PMR Logo -->
+            <div class="logo__mini" style="flex-shrink:0;">
+                <a href="index.html" class="logo__mini__link__two">PMR</a>
+            </div>
+
+        </div>
+    </nav>
+
     <div class="container">
-        <h1>Leaderboard</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- add with users from 'users' table in supabase -->
-                <tr>
-                    <td>1</td>
-                    <td>Alice</td>
-                    <td>1500</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Bob</td>
-                    <td>1200</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Charlie</td>
-                    <td>900</td>
-                </tr>
-            </tbody>
-        </table>
+        <h1 class="leaderboard-title font__format__red"></h1>
+        
+       
+        
+        <div id="leaderboard">
+            <!-- Users will be populated here by JavaScript -->
+        </div>
     </div>
+
+    <script type="module" src="ranking.js"></script>
 </body>
 </html>
