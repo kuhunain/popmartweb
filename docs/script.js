@@ -81,7 +81,7 @@ async function loginHandling() {
 //*** gets and loads all categories into html dropdown menu
 async function loadCategories() {
     // get the categories
-    const response = await fetch('/docs/categories.txt');
+    const response = await fetch('docs/categories.txt');
     const categories = await response.text();
 
     // create an arr of all categories, and remove white space
@@ -199,7 +199,7 @@ async function saveToUserStorage(figToSave) {
 // called onSecretClick(), onNotSecretClick(), and saveToLocalStorage()
 async function categoryFilter() {
     // loads csv sorted blind boxes
-    const response = await fetch('/docs/sorted_blind_boxes_with_category.csv');
+    const response = await fetch('docs/sorted_blind_boxes_with_category.csv');
     const dataCSV = await response.text();
 
     const figurines = parseCSV(dataCSV);
