@@ -82,7 +82,7 @@ async function loginHandling() {
 async function loadCategories() {
     // get the categories
     //const response = await fetch('docs/categories.txt');
-    const response = await fetch('categories.txt');
+    const response = await fetch('../category.txt');
     const categories = await response.text();
 
     // create an arr of all categories, and remove white space
@@ -201,7 +201,7 @@ async function saveToUserStorage(figToSave) {
 async function categoryFilter() {
     // loads csv sorted blind boxes
     //const response = await fetch('docs/sorted_blind_boxes_with_category.csv');
-    const response2 = await fetch('sorted_blind_boxes_with_category.csv');
+    const response2 = await fetch('../new_bb.csv');
     const dataCSV = await response2.text();
 
     const figurines = parseCSV(dataCSV);
@@ -221,7 +221,7 @@ async function categoryFilter() {
         if (!selected) return;
 
         // get all selected categories in figurines array
-        const filtered = figurines.filter(f => f.category === selected);
+        const filtered = figurines.filter(f => f.Category === selected);
         console.log('filtered', filtered);
         //console.log('Display area:', displayArea);
         
