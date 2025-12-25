@@ -39,15 +39,32 @@ Scores automatically update when figurines are added or removed and are saved to
 
 ---
 
-## 🧠 Data Processing
+## 🧠 Data Pipeline & Automation
+### 🔎 Automated Web Scraping
+Pop Mart product data is automatically scraped from the official Pop Mart website using Playwright (Python):
+- Handles dynamic, JavaScript-rendered pages
+- Automatically accepts the site’s privacy policy popup
+Extracts:
+- Figurine name
+- Category / series
+- Image URL
+Supports pagination and category discovery
 
-Pop Mart figurine data is preprocessed using Python:
+### 📁 Data Outputs
+Each scrape produces:
+- new_bb.csv — cleaned figurine data for frontend/backend use
+- category.txt — unique list of all discovered Pop Mart categories
 
-- Reads figurine data from a CSV file
-- Automatically assigns categories based on keyword matching
-- Sorts and exports cleaned data for frontend usage
+---
 
-This allows the app to scale to hundreds or thousands of figurines without manual categorization.
+## ⏱️ Scheduled Scraping (GitHub Actions)
+
+Scraping is fully automated using GitHub Actions:
+
+- Runs once per month on the 1st
+- Can also be triggered manually
+- Executes the Playwright scraper in a clean Linux environment
+- Uploads the latest CSV and category files as downloadable artifacts
 
 ---
 
@@ -67,6 +84,7 @@ This allows the app to scale to hundreds or thousands of figurines without manua
 
 ### Data Processing
 - Python
+- Playwright (browser automation & scraping)
 - CSV parsing and data normalization
 
 ---
@@ -99,10 +117,7 @@ All database operations are scoped to the authenticated user.
 ---
 
 ## 🚧 Future Improvements
-- Global leaderboard page
-- Updated figurine scraping direct from PopMart website
 - Advanced collection analytics and statistics
-- Admin tools for managing figurine data
 - Server-side score calculation for improved performance
 
 ---
@@ -114,7 +129,8 @@ This project demonstrates:
 - Cloud-hosted data persistence
 - Custom scoring and business logic
 - Data preprocessing with Python
-- Secure multi-user systems
+- Automated web scraping with Playwright
+- CI/CD-style scheduled data collection
 
 ---
 
