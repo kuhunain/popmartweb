@@ -32,5 +32,5 @@ jobs:
       with:
         name: popmart-scrape
         path: |
-          new_bb.csv
-          category.txt
+          docs/new_bb.csv
+          docs/category.txt
