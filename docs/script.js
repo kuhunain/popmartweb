@@ -82,7 +82,10 @@ async function loginHandling() {
 async function loadCategories() {
     // get the categories
     //const response = await fetch('docs/categories.txt');
-    const response = await fetch('../category.txt');
+    const response = await fetch('./category.txt');
+    if (!response.ok) {
+        throw new Error(`Failed to load category.txt (${response.status})`);
+    }
     const categories = await response.text();
 
     // create an arr of all categories, and remove white space
@@ -201,7 +204,10 @@ async function saveToUserStorage(figToSave) {
 async function categoryFilter() {
     // loads csv sorted blind boxes
     //const response = await fetch('docs/sorted_blind_boxes_with_category.csv');
-    const response2 = await fetch('../new_bb.csv');
+    const response2 = await fetch('./new_bb.csv');
+    if (!response2.ok) {
+        throw new Error(`Failed to load new_bb.csv (${response2.status})`);
+    }
     const dataCSV = await response2.text();
 
     const figurines = parseCSV(dataCSV);
